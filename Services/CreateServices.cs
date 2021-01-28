@@ -40,7 +40,19 @@ namespace Services
             db.Patients.Add(newPatient);
             db.SaveChanges();
         }
-
-
+        public void createSymptom(string name, DateTime doo, long patientID)
+        {
+            var patient = db.Patients.Find(patientID);
+            var newSymptom = new SymptomInstance()
+            {
+                Name = name,
+                Doo = doo,
+                Patient = patient
+            };
+            db.SymptomInstances.Add(newSymptom);
+            db.SaveChanges();
+        }
     }
+
+
 }
