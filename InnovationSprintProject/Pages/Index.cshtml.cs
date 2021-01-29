@@ -42,18 +42,19 @@ namespace InnovationSprintProject.Pages
                 {
                     Patient patient = _db.Patients.Where(x => x.Name == ("Patient "+i)).Single();
                     cs.createSymptom("Symptom "+i, generateDateOfOccurance(), patient.Id);
+                    cs.createSymptom("Another Symptom " + i, generateDateOfOccurance(), patient.Id);
                 }                
             }
 
-            //printing the patients older than 30 years old to the console
-            fs.getPatientsOlderThan(30).ForEach(x => Console.Out.WriteLine(x.Name));
+            //printing the patients older than 65 years old to the console 
+            fs.getPatientsOlderThan(65).ForEach(x => Console.Out.WriteLine("Patient "+x.Name+" is older than 65 years old"));
 
             //printing the symprtom instances of the "Patient 5" patient
             Patient pat = _db.Patients.Where(x => x.Name == ("Patient " + 5)).Single();
             //cs.createSymptom("Another Symptom", generateDateOfOccurance(), pat.Id); //adding another symptom instance to "Patient 5" patient
-            fs.getSymptomInstancesByPatientID(pat.Id).ForEach(x=> Console.Out.WriteLine(x.Name));
+            fs.getSymptomInstancesByPatientID(pat.Id).ForEach(x=> Console.Out.WriteLine("Patient's 5 Symptom: "+x.Name));
 
-            List<MorbidityGroup> groups = _db.MorbidityGroups.Where(m => m.Id == 30030 /*|| m.Id == 30031*/).ToList();
+            List<MorbidityGroup> groups = _db.MorbidityGroups.Where(m => m.Name.Equals("MorbidityGroup 0") || m.Name.Equals("MorbidityGroup 1")).ToList();
             fs.getPatientsByMorbidityGroups(groups).ForEach(x => Console.Out.WriteLine("patient found by morbidity groups: " + x.Name));
 
         }
