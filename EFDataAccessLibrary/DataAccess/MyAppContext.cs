@@ -14,7 +14,9 @@ namespace EFDataAccessLibrary.DataAccess
         public DbSet<MorbidityGroup> MorbidityGroups { get; set; }
         public DbSet<SymptomInstance> SymptomInstances { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<PatientMorbidityGroup> PatientMorbidityGroups { get; set; }
+
+         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Patient>()
                 .HasKey(x => x.Id);
