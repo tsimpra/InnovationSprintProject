@@ -38,7 +38,6 @@ namespace InnovationSprintProject.Pages
                 {
                     cs.createPatient("Patient " + i, generateDateOfBirth(), generateMorbidityGroups());
                 }
-
                 for (int i = 0; i < 10; i++)
                 {
                     Patient patient = _db.Patients.Where(x => x.Name == ("Patient "+i)).Single();
@@ -51,10 +50,11 @@ namespace InnovationSprintProject.Pages
 
             //printing the symprtom instances of the "Patient 5" patient
             Patient pat = _db.Patients.Where(x => x.Name == ("Patient " + 5)).Single();
-            cs.createSymptom("Another Symptom", generateDateOfOccurance(), pat.Id); //adding another symptom instance to "Patient 5" patient
+            //cs.createSymptom("Another Symptom", generateDateOfOccurance(), pat.Id); //adding another symptom instance to "Patient 5" patient
             fs.getSymptomInstancesByPatientID(pat.Id).ForEach(x=> Console.Out.WriteLine(x.Name));
 
-            
+            List<MorbidityGroup> groups = _db.MorbidityGroups.Where(m => m.Id == 30030 /*|| m.Id == 30031*/).ToList();
+            fs.getPatientsByMorbidityGroups(groups).ForEach(x => Console.Out.WriteLine("patient found by morbidity groups: " + x.Name));
 
         }
 

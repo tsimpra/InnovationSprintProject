@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -24,6 +25,35 @@ namespace Services
             return db.SymptomInstances.Where(x => x.Patient == patient).ToList();
         }
 
+        public List<Patient> getPatientsByMorbidityGroups(List<MorbidityGroup> morbidityGroups)
+        {
+            var list = db.PatientMorbidityGroups.Where(p => morbidityGroups.Contains(p.MorbidityGroup)).ToList();
+            var finalList = existsInListThatTimes(list, morbidityGroups.Count());
+            var pIds = finalList.Select(x => x.PatientId).ToList();
+            return db.Patients.Where(x => pIds.Contains(x.Id)).ToList();
 
+          
+        }
+
+        private List<PatientMorbidityGroup> existsInListThatTimes(List<PatientMorbidityGroup> list,int times)
+        {
+            List<PatientMorbidityGroup> returningList = new List<PatientMorbidityGroup>();
+            foreach (PatientMorbidityGroup group in list)
+            {
+                int count = 0;
+                foreach(PatientMorbidityGroup gr in list)
+                {
+                    if(gr.PatientId == group.PatientId)
+                    {
+                        count++;
+                    }
+                }
+                if(count == times)
+                {
+                    returningList.Add(group);
+                }
+            }
+            return returningList;
+        }
     }
 }
